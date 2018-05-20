@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mycoffemachine</title>
+</head>
+
+<body>
+    <input type="button" onclick="vitek.userFill()" value="Налить воды" />
+    <input type="button" onclick="vitek.makeCoffe()" value="Запустить кофемашину" />
+    <input type="button" onclick="vitek.off()" value="Остановить кофемашину" />
+   <div> Воды налито:<i id="volume" style="width:100px; height:100px"></i> мл   </div>
+
+
+    <script type="text/javascript">
+        function CoffeMachine(power, maxVolumeWater) {
+            var volumeWater = 0;
+            var x = document.getElementById("volume");
+            x.innerText = volumeWater;
+
+            function getBoilTime() {
+                return (((volumeWater / 1000) * 70 * 500) / power)
+            }
+
+
+            function fillWater(newVolumeWater) {
+                if (newVolumeWater >= 200 && newVolumeWater <= maxVolumeWater) {
+                    volumeWater = newVolumeWater;
+                    x.innerText = volumeWater;
+                } else {
+                    console.error('Проверьте воду!!!')
+                }
+            }
+
+            this.userFill = function() {
+                var userFill = +prompt('Сколько нальем воды в мл? min:200 max:' + maxVolumeWater);
+                fillWater(userFill);
+            }
+
+            this.makeCoffe = function() {
+                if (volumeWater >= 200) {
+                    var time = Math.ceil(getBoilTime())
+
+                    console.log('Кофе приготовится через:' + time + ' секунд')
+
+                    timeoutId = setTimeout(function() {
+                        console.log('Кофе готов!!!');
+                        alert('Кофе готов!!!');
+
+                        volumeWater = 0;
+                        x.innerText = volumeWater;
+                    }, time * 1000)
+
+                } else {
+                    console.error('Проверьте воду!')
+                }
+            }
+            this.off = function() {
+                clearTimeout(timeoutId)
+                console.error('Произошла отмена')
+            }
+           
+        }
+
+        var vitek = new CoffeMachine(1050, 1500);
+        
+    </script>
+
+</body>
+
+</html>
