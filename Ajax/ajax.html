@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>AJAX</title>
+  </head>
+  <body>
+    <button type="button" id="btn" style="color:red; width: 200px; height: 60px">Нажми меня!!!</button><br/>
+    <img id="img" src="" alt="" style="width: 500px; height: 400px">
+
+    <script type="text/javascript">
+      var btn = document.getElementById('btn');
+      var img = document.getElementById('img');
+
+      btn.onclick = ajax;
+
+      function ajax() {
+        var req = new XMLHttpRequest()
+
+        req.open('GET', 'https://dog.ceo/api/breeds/image/random')
+      
+        req.send()
+        
+        req.onreadystatechange = function() {
+          if (req.readyState == 4 && req.status == 200) {
+            var data = JSON.parse(req.responseText)
+
+            console.log(data)
+              
+              img.src = data.message
+
+          }
+        }
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        var user = {
+            name: "Anton",
+            surname: "Family",
+            age: 30,
+            phone: 88001234567,
+            male: "male",
+            city: "Ryazan"
+        }
+        var str = JSON.stringify(user);
+        console.log(str);
+        var obj = JSON.parse(str);
+        console.log(obj)
+
+    </script>
+
+</body>
+
+</html>
