@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea name="" id="text" cols="50" rows="10"></textarea>
+    <input type="button" id="btn" onclick="change()" value="Нажать для замены">
+
+    <script type="text/javascript">
+        function change() {
+
+            text = document.getElementById("text")
+
+            console.log(text)
+
+            rep = text.value.replace(/\B'|'\B/g, "\"")
+
+            text.innerHTML = rep
+
+            console.log(rep)
+
+        }
+
+    </script>
+</body>
+
+</html>
