@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="inp" />
+    <textarea id="block" cols="30" rows="10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex aliquam labore, repellendus ducimus amet debitis dolor nisi minima quo in et rem quod iste temporibus? Perferendis animi error molestiae tempora!</textarea>
+
+    <script type="text/javascript">
+        var input = document.getElementById('inp')
+        var block = document.getElementById('block')
+        var firstValue = block.value
+        input.oninput = function(e) {
+            block.value = firstValue
+            var reg = new RegExp(input.value, 'g')
+            block.value = block.value.replace(reg, function(str) {
+                return str.toUpperCase()
+            })
+        }
+
+    </script>
+
+</body>
+
+</html>

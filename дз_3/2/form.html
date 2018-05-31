@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="#">
+        Имя<input id="userName" type="text" placeholder="Name" style="display: block"><br/> Телефон
+        <input id="phone" type="text" placeholder="+7(999)123-45-67" style="display: block"><br/> Email
+        <input id="email" type="text" placeholder="mymail@mail.ru" style="display: block"><br/>
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <input id="btn" type="button" onclick="valid()" value="отправить">
+    </form>
+
+    <script>
+        var userName = document.getElementById("userName");
+        var phone = document.getElementById("phone");
+        var email = document.getElementById("email");
+        console.log(userName.value)
+
+        function valid() {
+            var checkName = /\W|\d/;
+            var checkPhone = /\+\d\(\d\d\d\)\d\d\d-?\d\d-?\d\d/;
+            var checkEmail = /\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}/;
+            console.log(checkName.test(userName.value))
+            if (checkName.test(userName.value) || userName.value == ""){
+                alert("Имя должно содержать только буквы")
+            }
+            if (!checkPhone.test(phone.value)) {
+                alert("Проверьте правильность ввода телефона")
+            }
+            if (!checkEmail.test(email.value)){
+                alert("Проверьте правильность ввода E-mail")
+                }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
