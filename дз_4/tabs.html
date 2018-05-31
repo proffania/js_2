@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .window {
+            width: 800px;
+            height: 400px;
+            background: forestgreen;
+        }
+
+        .menu {
+            background: aqua;
+            display: flex;
+        }
+
+        .tab {
+            width: 200px;
+            height: 20px;
+            border: 2px solid black;
+            text-align: center;
+        }
+        .content{
+            text-align: center;
+            font-size: 200px;
+            line-height: 350px;
+            width: 800px;
+            height: 380px;
+            position: absolute;
+        }
+        .active{
+            border-bottom: none;
+        }
+        .hidden{
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="window">
+        <div class="menu">
+            <div class="tab">1</div>
+            <div class="tab">2</div>
+            <div class="tab">3</div>
+            <div class="tab">4</div>
+        </div>
+        <div class="content">1</div>
+        <div class="content hidden">2</div>
+        <div class="content hidden">3</div>
+        <div class="content hidden">4</div>
+    </div>
+    <script>
+        
+//        console.log($('.tab')[2])
+        $('.tab').click(function(){
+            $('.tab').removeClass("active");
+            $(this).addClass("active");
+            var i = $('.tab').eq(this);
+//            console.log(i);
+            for ( var j=0 ; j<$('.tab').length ; j++){
+                if ($('.tab')[j].className == "tab active"){
+                    $('.content').addClass("hidden");
+                    $('.content').eq(j).removeClass("hidden");
+                }
+            }
+            
+        })
+       
+    </script>
+</body>
+
+</html>
