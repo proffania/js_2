@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <style>
+        .main {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #container {
+            float: left;
+            width: 300px
+        }
+
+        a {
+            display: block;
+            float: left;
+            margin-left: 15px;
+            text-decoration: none;
+            color: forestgreen;
+            
+            
+
+        }
+
+        img {
+            float: right;
+            margin-top: -300px;
+            opacity: 0;
+        }
+
+        input {
+            height: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div id="container"></div>
+        <img id="img" src="" alt="" style="width: 500px; height: 400px">
+        <input id="tags">
+    </div>
+
+    <script>
+        arr = []
+        $.ajax({
+            url: 'https://dog.ceo/api/breeds/list/all',
+            type: 'get',
+            dataType: 'json',
+            complete: function(data) {
+                //                console.log(data.responseJSON.message)
+                for (var key in data.responseJSON.message) {
+                    var a = document.createElement('a');
+                    a.className = "dog";
+                    a.innerHTML = key;
+                    a.href = "#"
+                    container.appendChild(a);
+                    arr.push(key)
+
+                }
+            }
+        })
+
+        function getImg() {
+            $('.dog').click(function() {
+                    $('#img').css("marginTop", "-100px").css("opacity", "0")
+                    var dogUrl = $(this)[0].innerHTML;
+                    $.ajax({
+                        url: 'https://dog.ceo/api/breed/' + dogUrl + '/images/random',
+                        type: 'get',
+                        dataType: 'json',
+                        complete: function(data) {
+                            $('#img').attr('src', data.responseJSON.message).animate({
+                                marginTop: 0,
+                                opacity: 1
+                            }, 1000)
+                        }
+                    })
+
+
+                }
+
+            )
+        }
+        setTimeout('getImg()', 1000)
+//        console.log(arr);
+        $("#tags").autocomplete({
+            source: arr,
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>
