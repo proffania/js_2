@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cart</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="cart"></div>
+    <div id="total">0</div>
+    <input type="text" id="product-name" placeholder="Название продукта">
+    <input type="text" id="product-price" placeholder="Цена">
+    <button type="button" id="add-button" disabled>Добавить</button>
+
+
+    <div>
+        <textarea name="" id="userComment" cols="30" rows="10"></textarea>
+        <button type="button" id="add-comments">Добавить</button>
+        <div id="block-comments"></div>
+    </div>
+
+    <script type="text/javascript">
+        var $cart = $('#cart')
+        var $total = $('#total')
+        var $productName = $('#product-name')
+        var $productPrice = $('#product-price')
+        var $addButton = $('#add-button')
+        var apiBaseUrl = 'http://85.119.150.33'
+        var user_id = ''
+
+        $.ajax({
+            url: apiBaseUrl + '/shop',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+
+                user_id = data.user_id
+
+                $addButton.attr('disabled', false)
+            }
+        })
+
+        $addButton.click(function() {
+            var product = $productName.val()
+            var price = parseFloat($productPrice.val())
+
+            $.ajax({
+                url: `${apiBaseUrl}/shop?user_id=${user_id}&product=${product}&price=${price}`,
+                type: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    //                    console.log(data)
+
+                    var $dlt = $('<p/>', {
+                        class: 'dlt',
+                        text: 'Удалить',
+                        click: function() {
+                            $('div#' + data.product_id).remove(),
+                                newTotal = parseFloat($total.text()) - price;
+                            $total.text(newTotal)
+                        }
+                    })
+
+                    var $newProduct = $('<div/>', {
+                        class: 'product',
+                        text: `${data.product} | ${data.price} | `,
+                        id: data.product_id,
+
+                    })
+
+                    $newProduct.appendTo('#cart')
+                    $dlt.appendTo('#' + data.product_id).css('display', 'inline')
+
+
+                    var newTotal = parseFloat($total.text()) + price
+
+                    $total.text(newTotal)
+                }
+            })
+        })
+
+
+
+
+
+        var $block = $('#block-comments');
+        var $addComment = $('#add-comments');
+        var $userComment = $('#userComment');
+
+        $.ajax({
+            url: apiBaseUrl + '/comments',
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                //                console.log(data)
+                for (var i = 0; i < data.length; i++) {
+                    var $usersComments = $('<div/>', {
+                        class: 'comment',
+                        id: data[i].comment_id,
+                        text: "Имя: " + data[i].comment_id + "| Комментарий: " + data[i].text + "| Likes: " + data[i].likes,
+                        //                        click: function() {
+                        //                            $(this).css('background', 'green')
+                        //                        }
+                    }).css('border', '1px solid red')
+                    $usersComments.appendTo('#block-comments')
+                                        
+                }
+
+            }
+        })
+
+        $addComment.click(function() {
+            var userComment = $userComment.val()
+
+            $.ajax({
+                url: `${apiBaseUrl}/comments?text=${userComment}`,
+                type: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    //                    console.log(data)
+                   var $userComment = $('<div/>', {
+                        id: user_id,
+                        text: "Имя: " + user_id + "| Комментарий: " + data.text + "| Likes: " + data.likes
+                    }).css('border', '1px solid green')
+                    $userComment.prependTo('#block-comments')
+                }
+            })
+        })
+
+        
+       $('.comment').click(function(){
+                    $.ajax({
+                        url: `${apiBaseUrl}/comments?comments_id=_d3hrzd173`,
+                        type: 'delete',
+                        success: function(result) {
+                            console.log(result)
+                        }
+        
+                    })
+           })
+               
+
+    </script>
+</body>
+
+</html>
