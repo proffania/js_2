@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Slider</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        .container{
+            width: 1200px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        .slider{position: relative;
+            text-align: center;
+            margin:50px auto
+           
+        }
+        .slide {
+            width: 100%;
+            position: absolute;
+            list-style-type: none;
+            font-size: 200px;
+            opacity:1;
+            transition-duration: 1.5s;
+        }
+
+        .hidden {            
+            visibility: hidden;
+            opacity:0; 
+        }
+        
+        .control{
+            width: 100%;
+            font-size: 200px;
+            position: relative;
+/*            top:-245px;*/
+            display: flex;
+            justify-content: space-between;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="slider">
+            <div class="slide" style="background: yellow">1</div>
+            <div class="slide hidden" style="background: orange">2</div>
+            <div class="slide hidden" style="background: red">3</div>
+            <div class="slide hidden" style="background: purple">4</div>
+            <div class="slide hidden" style="background: green">5</div>
+        </div>
+
+        <div class="control">
+            <div id="left"> &#171; </div>
+            <div id="right"> &#187; </div>
+        </div>
+
+    </div>
+    <script>
+        var $left = $('#left')
+        var $right = $('#right')
+        var $slide = $('.slide')
+        var i;
+
+        $left.click(function() {
+            for (i = 0; i < $slide.length; i++) {
+                if (!$slide.eq(i).hasClass('hidden')) {
+                    $slide.eq(i).addClass('hidden')
+                    i == 0 ? $slide.eq($slide.length - 1).removeClass('hidden') : $slide.eq(i - 1).removeClass('hidden')
+                    break
+                }
+            }
+        })
+
+        $right.click(goRight)
+        setInterval(goRight, 3000)
+
+
+        function goRight() {
+            for (i = 0; i < $slide.length; i++) {
+                if (!$slide.eq(i).hasClass('hidden')) {
+                    $slide.eq(i).addClass('hidden')
+                    i == ($slide.length - 1) ? $slide.eq(0).removeClass('hidden') : $slide.eq(i + 1).removeClass('hidden')
+                    break
+                }
+            }
+        }
+       
+
+    </script>
+
+</body>
+
+</html>
